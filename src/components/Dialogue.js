@@ -27,5 +27,5 @@ export default function createDialog(k, text, posVec2, lifetime = 3, size = 48) 
         k.destroy(dialogBox)
         k.destroy(dialogText)
     })
-    return dialogBox
+    return [dialogBox, dialogText]
 }
