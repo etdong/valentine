@@ -22,7 +22,6 @@ export default function makeRoom(k, width, height, wallThickness, center) {
         "wall"
     ]);
 
-    // eslint-disable-next-line no-unused-vars
     const right_wall = k.add([
         k.rect(wallThickness, height),
         k.anchor('center'),
@@ -45,5 +44,5 @@ export default function makeRoom(k, width, height, wallThickness, center) {
         "wall"
     ]);
 
-    return(top_wall, bottom_wall. right_wall, left_wall);
+    return [top_wall, bottom_wall, right_wall, left_wall];
 }
