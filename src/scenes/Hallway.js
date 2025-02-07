@@ -37,14 +37,18 @@ export default function initHallway(k) {
             }
         })
 
-        let room = makeRoom(k, 200, 1000, 4, k.center().sub(k.vec2(0, 200)))
+        let hallway = makeRoom(k, 200, 1000, 4, k.center().sub(k.vec2(0, 200)))
 
-        room[3].destroy()
+        hallway[3].destroy()
+
+        let stairs_entry = makeRoom(k, 100, 100, 4, k.center().sub(k.vec2(154, -150)))
+
+        stairs_entry[1].destroy()
 
         k.add([
             k.rect(4, 800),
             k.anchor('center'),
-            k.pos(k.center().sub(k.vec2(0, 200)).x - 100 - 2, k.center().sub(k.vec2(0, 300)).y),
+            k.pos(k.center().sub(k.vec2(102, 300))),
             k.color(0, 0, 0),
             k.area(),
             k.body({isStatic: true}),
@@ -55,13 +59,21 @@ export default function initHallway(k) {
         k.add([
             k.rect(4, 100),
             k.anchor('center'),
-            k.pos(k.center().sub(k.vec2(0, 200)).x - 100 - 2, k.center().sub(k.vec2(0, -250)).y),
+            k.pos(k.center().sub(k.vec2(102, -250))),
             k.color(0, 0, 0),
             k.area(),
             k.body({isStatic: true}),
             k.layer('bg'),
             "wall"
         ]);
+
+        k.add([
+            k.sprite('stairs'),
+            k.scale(0.7),
+            k.area(),
+            k.anchor('right'),
+            k.pos(k.center().sub(k.vec2(100, -150)))
+        ])
         
         makeDoor(k, k.center().add(k.vec2(97, -100)), 'bedroom-door', 'right')
         makeDoor(k, k.center().add(k.vec2(-107, -100)), 'bathroom-door')
