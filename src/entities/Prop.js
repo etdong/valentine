@@ -1,7 +1,7 @@
-export default function makeProp(k, posVec2, sprite, layer, anchor = "topleft", tag = "") {
+export default function makeProp(k, posVec2, sprite, layer, tag = "") {
     const prop = k.add([
         k.sprite(sprite),
-        k.anchor(anchor),
+        k.anchor('topleft'),
         k.scale(1),
         k.area(),
         k.body({ isStatic: true} ),
