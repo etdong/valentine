@@ -1,4 +1,4 @@
-export default function makePlayer(k, posVec2, speed) {
+export default function makePlayer(k, posVec2, speed, direction='down') {
     const player = k.add([
         k.sprite('player', { anim: "down-idle" }),
         k.scale(8),
@@ -9,7 +9,7 @@ export default function makePlayer(k, posVec2, speed) {
         k.layer('fg'),
         'player',
         {
-            direction: "down",
+            direction: direction,
             dir_vec: k.vec2(0, 0),
             rec_coll: null,
         }
@@ -59,7 +59,7 @@ export default function makePlayer(k, posVec2, speed) {
             }
         }
 
-        if (!k.isKeyDown()) {
+        if (!k.isKeyDown() && !player.direction.includes('idle')) {
             player.direction = player.direction + '-idle'
         }
 
@@ -132,8 +132,8 @@ export function checkProximity(objA, objB) {
     let minDistance = Infinity;
     
     for (const distance of Object.entries(distances)) {
-      if (Math.abs(distance[1]) < minDistance) {
-        minDistance = Math.abs(distance[1]);
+      if (Math.abs(distance[1]) < Math.abs(minDistance)) {
+        minDistance = distance[1];
       }
     }
 
