@@ -1,4 +1,3 @@
-import initMuteButton from "./components/MuteButton";
 import makeKaplayCtx from "./kaplayCtx";
 import initBedroom from "./scenes/Bedroom";
 import initHallway from "./scenes/Hallway";
@@ -58,9 +57,12 @@ export default async function initGame() {
 
     // starting game!!
     // k.go('bedroom', k.center())
-    k.go('hallway', k.center().add(k.vec2(50, 0)))
-    k.play('bedroom_bgm', {
-            volume: 0.5,
-            loop: true,
-        })
+    let bgm = k.play('bedroom_bgm', {
+        volume: 0.5,
+        loop: true,
+        paused: true,
+    })
+    
+    k.go('hallway', k.center().add(k.vec2(50, 0)), 'down', bgm)
+    
 }
