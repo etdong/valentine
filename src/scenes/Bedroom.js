@@ -19,6 +19,7 @@ export default function initBedroom(k) {
                 checkProximity(player, player.rec_coll) < 17) {
                 const dialog_pos = k.center().add(k.vec2(0, 400))
                 let dialog_text = null
+                k.debug.log('interacting with ' + player.rec_coll.tags[1])
                 switch (player.rec_coll.tags[1]) {
                     case 'table':
                         dialog_text = "My table seems pretty empty today."
