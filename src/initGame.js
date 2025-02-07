@@ -1,8 +1,11 @@
 import makeKaplayCtx from "./kaplayCtx";
-import drawBedroom from "./scenes/Bedroom";
+import initBedroom from "./scenes/Bedroom";
+import initHallway from "./scenes/Hallway";
 
 export default async function initGame() {
     const k = makeKaplayCtx();
+    k.setLayers(["bg", "game", "fg"], "game")
+    
     k.loadFont('gaegu', './fonts/Gaegu-Regular.ttf')
     k.loadSprite('player', './sprites/player_sheet.png', {
         sliceX: 2,
@@ -24,7 +27,6 @@ export default async function initGame() {
     k.loadSprite('dresser', './furniture/dresser.png');
     k.loadSprite('laundry', './sprites/laundry.png')
 
-
     const setInitCamZoom = () => {
         if (k.width() < 1000) {
             k.setCamScale(0.7, 0.7);
@@ -36,7 +38,9 @@ export default async function initGame() {
 
     setInitCamZoom();
 
-    k.setLayers(["bg", "game", "fg"], "game")
 
-    drawBedroom(k)
+    initBedroom(k)
+    initHallway(k)
+    k.go('bedroom', k.center())
+    // k.go('hallway', k.center().add(k.vec2(50, 0)))
 }
