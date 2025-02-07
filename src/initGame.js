@@ -26,6 +26,7 @@ export default async function initGame() {
     k.loadSprite('window', './furniture/window.png');
     k.loadSprite('dresser', './furniture/dresser.png');
     k.loadSprite('laundry', './sprites/laundry.png')
+    k.loadSprite('stairs', './images/stairs.png')
 
     const setInitCamZoom = () => {
         if (k.width() < 1000) {
@@ -41,6 +42,6 @@ export default async function initGame() {
 
     initBedroom(k)
     initHallway(k)
-    k.go('bedroom', k.center())
-    // k.go('hallway', k.center().add(k.vec2(50, 0)))
+    // k.go('bedroom', k.center())
+    k.go('hallway', k.center().add(k.vec2(50, 0)))
 }
