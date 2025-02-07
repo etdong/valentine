@@ -44,5 +44,5 @@ export default function makeRoom(k, width, height, wallThickness, center) {
         "wall"
     ]);
 
-    return [top_wall, bottom_wall, right_wall, left_wall];
+    return [top_wall, right_wall, bottom_wall, left_wall];
 }
