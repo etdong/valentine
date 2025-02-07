@@ -18,7 +18,7 @@ export default function initHallway(k) {
                 checkProximity(player, player.rec_coll) < 17) {
                 const dialog_pos = k.center().add(k.vec2(0, 400))
                 let dialog_text = null
-                console.log('interacting with ' + player.rec_coll.tags[1])
+                k.debug.log('interacting with ' + player.rec_coll.tags[1])
                 switch (player.rec_coll.tags[1]) {
                     case 'bedroom-door':
                     player.rec_coll = null
@@ -67,13 +67,20 @@ export default function initHallway(k) {
             "wall"
         ]);
 
-        k.add([
+        let stairs = k.add([
             k.sprite('stairs'),
             k.scale(0.7),
-            k.area(),
+            k.area({ shape: new k.Rect(k.vec2(-100, 0), 40, 150) }),
             k.anchor('right'),
-            k.pos(k.center().sub(k.vec2(100, -150)))
+            k.pos(k.center().sub(k.vec2(100, -150))),
+            'stairs_entry'
         ])
+
+        player.onCollide(() => {
+            if (player.isColliding(stairs)) {
+                k.go('stairwell')
+            }
+        })
         
         makeDoor(k, k.center().add(k.vec2(97, -100)), 'bedroom-door', 'right')
         makeDoor(k, k.center().add(k.vec2(-107, -100)), 'bathroom-door')
