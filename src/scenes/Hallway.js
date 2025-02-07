@@ -1,16 +1,23 @@
 import drawCurLocation from "../components/CurrentLocation";
 import createDialog from "../components/Dialogue";
 import makeDoor from "../components/Door";
-import initMuteButton from "../components/MuteButton";
 import makePlayer, { checkProximity } from "../entities/Player";
 import makeRoom from "../entities/Room";
+import { isMuted } from '../ReactUI';
 
 /**
  * 
  * @param {import("kaplay").KAPLAYCtx} k 
  */
 export default function initHallway(k) {
-    k.scene('hallway', (playerPos, direction) => {
+    k.scene('hallway', (playerPos, direction, bgm) => {
+        k.onUpdate(() => {
+            if (!isMuted) {
+                bgm.paused = false;
+            } else {
+                bgm.stop()
+            }
+        })
         k.setCamPos(playerPos)
         let player = makePlayer(k, playerPos, 400, direction);
 
@@ -26,7 +33,7 @@ export default function initHallway(k) {
                 switch (player.rec_coll.tags[1]) {
                     case 'bedroom-door':
                     player.rec_coll = null
-                    k.go('bedroom', k.center().sub(k.vec2(156, -110)), 'right')
+                    k.go('bedroom', k.center().sub(k.vec2(156, -110)), 'right', bgm)
                         return
                     default:
                         break
