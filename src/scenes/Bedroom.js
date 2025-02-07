@@ -4,13 +4,21 @@ import makeDoor from "../components/Door";
 import makePlayer, { checkProximity } from "../entities/Player";
 import makeProp from "../entities/Prop";
 import makeRoom from "../entities/Room";
+import { isMuted } from "../ReactUI";
 
 /**
  * 
  * @param {import("kaplay").KAPLAYCtx} k
  */
 export default function initBedroom(k) {
-    return k.scene('bedroom', (playerPos, direction) => {
+    return k.scene('bedroom', (playerPos, direction, bgm) => {
+        k.onUpdate(() => {
+                    if (!isMuted) {
+                        bgm.paused = false;
+                    } else {
+                        bgm.stop()
+                    }
+                })
         k.setCamPos(playerPos)
         let player = makePlayer(k, playerPos, 400, direction);
         
@@ -39,7 +47,7 @@ export default function initBedroom(k) {
                         break
                     case 'hallway-door':
                         player.rec_coll = null
-                        k.go('hallway', k.center().add(k.vec2(50, 0)), 'left')
+                        k.go('hallway', k.center().add(k.vec2(50, 0)), 'left', bgm)
                         return
                     default:
                         break
