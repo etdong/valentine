@@ -1,5 +1,7 @@
+import drawCurLocation from "../components/CurrentLocation";
 import createDialog from "../components/Dialogue";
 import makeDoor from "../components/Door";
+import initMuteButton from "../components/MuteButton";
 import makePlayer, { checkProximity } from "../entities/Player";
 import makeRoom from "../entities/Room";
 
@@ -12,6 +14,8 @@ export default function initHallway(k) {
         k.setCamPos(playerPos)
         let player = makePlayer(k, playerPos, 400, direction);
 
+        drawCurLocation(k, 'hallway')
+        
         let dialog = null
         k.onKeyPress('space', () => {
             if (player.rec_coll != null && 

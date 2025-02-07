@@ -1,3 +1,4 @@
+import drawCurLocation from "../components/CurrentLocation";
 import createDialog from "../components/Dialogue";
 import makeDoor from "../components/Door";
 import makePlayer, { checkProximity } from "../entities/Player";
@@ -13,6 +14,9 @@ export default function initBedroom(k) {
         k.setCamPos(playerPos)
         let player = makePlayer(k, playerPos, 400, direction);
         
+        drawCurLocation(k, 'bedroom')
+        
+
         let dialog = null
         k.onKeyPress('space', () => {
             if (player.rec_coll != null && 
