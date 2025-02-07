@@ -1,3 +1,12 @@
+/**
+ * 
+ * @param {import("kaplay").KAPLAYCtx} k 
+ * @param {vec2} posVec2 
+ * @param {int} speed 
+ * @param {String} direction 
+ * @returns 
+ */
+
 export default function makePlayer(k, posVec2, speed, direction='down') {
     const player = k.add([
         k.sprite('player', { anim: "down-idle" }),
