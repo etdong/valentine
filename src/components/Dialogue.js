@@ -21,10 +21,15 @@ export default function createDialog(k, text, posVec2, lifetime = 3, size = 48) 
             isDestroyed: false
         }
     ])
+    if (lifetime > 0) {
+        k.wait(lifetime, () => {
+            dialogBox.isDestroyed = true
+            k.destroy(dialogBox)
+            k.destroy(dialogText)
+        })
+    }
 
-    k.wait(lifetime, () => {
-        dialogBox.isDestroyed = true
-        k.destroy(dialogBox)
+    dialogBox.onDestroy(() => {
         k.destroy(dialogText)
     })
     return [dialogBox, dialogText]
