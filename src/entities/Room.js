@@ -1,7 +1,7 @@
 
 export default function makeRoom(k, width, height, wallThickness, center) {
     const top_wall = k.add([
-        k.rect(width + wallThickness * 2, wallThickness),
+        k.rect(width + wallThickness, wallThickness),
         k.anchor('center'),
         k.pos(center.x, center.y - height / 2 - wallThickness / 2),
         k.color(0, 0, 0),
@@ -12,7 +12,7 @@ export default function makeRoom(k, width, height, wallThickness, center) {
     ]);
 
     const bottom_wall = k.add([
-        k.rect(width + wallThickness * 2, wallThickness),
+        k.rect(width + wallThickness, wallThickness),
         k.anchor('center'),
         k.pos(center.x, center.y + height / 2 + wallThickness / 2),
         k.color(0, 0, 0),
