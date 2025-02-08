@@ -1,6 +1,8 @@
 import makeKaplayCtx from "./kaplayCtx";
 import initBedroom from "./scenes/Bedroom";
 import initHallway from "./scenes/Hallway";
+import initIntro from "./scenes/Intro";
+import initStairwell from "./scenes/Stairwell";
 
 export default async function initGame() {
 
@@ -32,10 +34,14 @@ export default async function initGame() {
     k.loadSprite('dresser', './furniture/dresser.png');
     k.loadSprite('laundry', './sprites/laundry.png')
     k.loadSprite('stairs', './images/stairs.png')
+    k.loadSprite('stairwell', './images/stairwell.png')
     k.loadSprite('sound_unmuted', './images/sound_unmuted.png')
     k.loadSprite('sound_muted', './images/sound_muted.png')
 
     // sounds
+    k.loadSound('interact', './sounds/interact.wav')
+    k.loadSound('door_open', './sounds/door_open.mp3')
+    k.loadSound('intro_bgm', './sounds/intro_bgm.mp3')
     k.loadSound('bedroom_bgm', './sounds/bedroom_bgm.mp3')
 
 
@@ -54,15 +60,18 @@ export default async function initGame() {
     // scene initialization
     initBedroom(k)
     initHallway(k)
+    initStairwell(k)
+    initIntro(k)
 
     // starting game!!
-    // k.go('bedroom', k.center())
-    let bgm = k.play('bedroom_bgm', {
+    let bgm = k.play('intro_bgm', {
         volume: 0.5,
         loop: true,
         paused: true,
     })
-    
-    k.go('hallway', k.center().add(k.vec2(50, 0)), 'down', bgm)
+    k.go('intro', bgm)
+    // k.go('bedroom', k.center(), 'down', bgm)
+    // k.go('hallway', k.center().add(k.vec2(50, 0)), 'down', bgm)
+    // k.go('stairwell', k.center().sub(k.vec2(-200, 50)), 'left', bgm)
     
 }
