@@ -1,4 +1,5 @@
 import drawCurLocation from "../components/CurrentLocation";
+import initDebug from "../components/debug";
 import createDialog from "../components/Dialogue";
 import makeDoor from "../components/Door";
 import makePlayer, { checkProximity } from "../entities/Player";
@@ -18,10 +19,13 @@ export default function initHallway(k) {
                 bgm.stop()
             }
         })
+
         k.setCamPos(playerPos)
         let player = makePlayer(k, playerPos, 400, direction);
 
         drawCurLocation(k, 'hallway')
+
+        initDebug(k, player)        
         
         let dialog = null
         k.onKeyPress('space', () => {
@@ -33,6 +37,7 @@ export default function initHallway(k) {
                 switch (player.rec_coll.tags[1]) {
                     case 'bedroom-door':
                     player.rec_coll = null
+                    k.play('door_open', { volume: 0.3, speed: 1.2 })
                     k.go('bedroom', k.center().sub(k.vec2(156, -110)), 'right', bgm)
                         return
                     default:
@@ -89,7 +94,7 @@ export default function initHallway(k) {
 
         player.onCollide(() => {
             if (player.isColliding(stairs)) {
-                k.go('stairwell')
+                k.go('stairwell', k.center().sub(k.vec2(-200, 50)), 'left', bgm)
             }
         })
         
