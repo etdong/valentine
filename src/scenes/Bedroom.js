@@ -1,4 +1,5 @@
 import drawCurLocation from "../components/CurrentLocation";
+import initDebug from "../components/debug";
 import createDialog from "../components/Dialogue";
 import makeDoor from "../components/Door";
 import makePlayer, { checkProximity } from "../entities/Player";
@@ -24,29 +25,31 @@ export default function initBedroom(k) {
         
         drawCurLocation(k, 'bedroom')
         
+        initDebug(k, player)        
 
         let dialog = null
         k.onKeyPress('space', () => {
             if (player.rec_coll != null && 
                 checkProximity(player, player.rec_coll) < 17) {
-                const dialog_pos = k.center().add(k.vec2(0, 400))
+                const dialog_pos = k.center().add(k.vec2(0, k.height()/2 - 100))
                 let dialog_text = null
                 k.debug.log('interacting with ' + player.rec_coll.tags[1])
                 switch (player.rec_coll.tags[1]) {
                     case 'table':
-                        dialog_text = "My table seems pretty empty today."
+                        dialog_text = "i didn't have time to draw all the table things..."
                         break
                     case 'bed':
-                        dialog_text = "My bed. I love my bed."
+                        dialog_text = "it's your bed!! you love your bed"
                         break
                     case 'laundry':
-                        dialog_text = "I should do my laundry soon."
+                        dialog_text = "maybe its time for laundry"
                         break
                     case 'dresser':
-                        dialog_text = "My dresser."
+                        dialog_text = "so many clothes"
                         break
                     case 'hallway-door':
                         player.rec_coll = null
+                        k.play('door_open', { volume: 0.3, speed: 1.2 })
                         k.go('hallway', k.center().add(k.vec2(50, 0)), 'left', bgm)
                         return
                     default:
@@ -57,6 +60,7 @@ export default function initBedroom(k) {
                     dialog[1].destroy()
                 }
                 if (dialog_text != null) {
+                    k.play('interact', { volume: 1 })
                     dialog = createDialog(k, dialog_text, dialog_pos)
                 }
             }
