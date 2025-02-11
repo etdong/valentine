@@ -1,5 +1,5 @@
 export default function initDebug(k, player) {
     k.onKeyPress('m', () => {
-        k.debug.log(player.pos)
+        k.debug.log(player.pos.sub(k.center()))
     })
 }
