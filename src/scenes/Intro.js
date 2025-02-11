@@ -1,4 +1,4 @@
-import createDialog from "../components/Dialogue";
+import makeDialog from "../components/Dialogue";
 import makePlayer from "../entities/Player";
 import { isMuted } from "../ReactUI";
 
@@ -23,7 +23,7 @@ export default function initIntro(k) {
         const dialog_pos = k.center().add(k.vec2(0, k.height()/2 - 100))
         if (progress == -1) {
             k.wait(1, () => {
-                dialog = createDialog(k, "hi baby! how are you doing? (press space)", dialog_pos, 0)
+                dialog = makeDialog(k, "hi baby! how are you doing? (press space)", dialog_pos, 0)
                 progress = 1
             })
         }
@@ -37,19 +37,19 @@ export default function initIntro(k) {
                 dialog[1].destroy()
             }
             if (progress == 1) {
-                dialog = createDialog(k, "i really hope you enjoy this little game i made for you", dialog_pos, 0)
+                dialog = makeDialog(k, "i really hope you enjoy this little game i made for you", dialog_pos, 0)
             }
             if (progress == 2) {
-                dialog = createDialog(k, "i worked pretty hard on it despite what it looks like", dialog_pos, 0)
+                dialog = makeDialog(k, "i worked pretty hard on it despite what it looks like", dialog_pos, 0)
             }
             if (progress == 3) {
-                dialog = createDialog(k, "i hope you have fun exploring the house", dialog_pos, 0)
+                dialog = makeDialog(k, "i hope you have fun exploring the house", dialog_pos, 0)
             }
             if (progress == 4) {
-                dialog = createDialog(k, "i love you so much, have fun!!", dialog_pos, 0)
+                dialog = makeDialog(k, "i love you so much, have fun!!", dialog_pos, 0)
             }
             if (progress == 5) {
-                dialog = createDialog(k, "just remember, WASD or arrow keys to move and SPACE to interact", dialog_pos, 0)
+                dialog = makeDialog(k, "just remember, WASD or arrow keys to move and SPACE to interact", dialog_pos, 0)
             }
             if (progress == 6) {
                 bgm.stop()

@@ -1,6 +1,6 @@
 import drawCurLocation from "../components/CurrentLocation";
 import initDebug from "../components/debug";
-import createDialog from "../components/Dialogue";
+import makeDialog from "../components/Dialogue";
 import makeDoor from "../components/Door";
 import makePlayer, { checkProximity } from "../entities/Player";
 import makeProp from "../entities/Prop";
@@ -61,7 +61,7 @@ export default function initBedroom(k) {
                 }
                 if (dialog_text != null) {
                     k.play('interact', { volume: 1 })
-                    dialog = createDialog(k, dialog_text, dialog_pos)
+                    dialog = makeDialog(k, dialog_text, dialog_pos)
                 }
             }
         })
