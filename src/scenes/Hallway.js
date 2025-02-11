@@ -1,6 +1,6 @@
 import drawCurLocation from "../components/CurrentLocation";
 import initDebug from "../components/debug";
-import createDialog from "../components/Dialogue";
+import makeDialog from "../components/Dialogue";
 import makeDoor from "../components/Door";
 import makePlayer, { checkProximity } from "../entities/Player";
 import makeRoom from "../entities/Room";
@@ -38,7 +38,17 @@ export default function initHallway(k) {
                     case 'bedroom-door':
                     player.rec_coll = null
                     k.play('door_open', { volume: 0.3, speed: 1.2 })
-                    k.go('bedroom', k.center().sub(k.vec2(156, -110)), 'right', bgm)
+                    k.go('bedroom', k.center().sub(150, -100), 'right', bgm)
+                        return
+                    case 'bathroom-door':
+                        player.rec_coll = null
+                        k.play('door_open', { volume: 0.3, speed: 1.2 })
+                        k.go('bathroom', k.center(), 'left', bgm)
+                        return
+                    case 'spare room 1-door':
+                        player.rec_coll = null
+                        k.play('door_open', { volume: 0.3, speed: 1.2 })
+                        k.go('spare1', k.center(), 'right', bgm)
                         return
                     default:
                         break
@@ -48,7 +58,7 @@ export default function initHallway(k) {
                     dialog[1].destroy()
                 }
                 if (dialog_text != null) {
-                    dialog = createDialog(k, dialog_text, dialog_pos)
+                    dialog = makeDialog(k, dialog_text, dialog_pos)
                 }
             }
         })
@@ -100,8 +110,8 @@ export default function initHallway(k) {
         
         makeDoor(k, k.center().add(k.vec2(97, -100)), 'bedroom-door', 'right')
         makeDoor(k, k.center().add(k.vec2(-107, -100)), 'bathroom-door')
-        makeDoor(k, k.center().add(k.vec2(97, 100)), 'room1-door', 'right')
-        makeDoor(k, k.center().add(k.vec2(-107, -300)), 'room2-door')
+        makeDoor(k, k.center().add(k.vec2(97, 100)), 'spare room 1-door', 'right')
+        makeDoor(k, k.center().add(k.vec2(-107, -300)), 'spare room 2-door')
 
     })
 }

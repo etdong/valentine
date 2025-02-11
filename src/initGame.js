@@ -1,7 +1,10 @@
 import makeKaplayCtx from "./kaplayCtx";
+import initBathroom from "./scenes/Bathroom";
+import initBathroom_mirror from "./scenes/Bathroom_mirror";
 import initBedroom from "./scenes/Bedroom";
 import initHallway from "./scenes/Hallway";
 import initIntro from "./scenes/Intro";
+import initSpare1 from "./scenes/Spare1";
 import initStairwell from "./scenes/Stairwell";
 
 export default async function initGame() {
@@ -28,15 +31,31 @@ export default async function initGame() {
             "up-idle": 9,
         },
     });
+
+    k.loadSprite('sound_unmuted', './images/sound_unmuted.png')
+    k.loadSprite('sound_muted', './images/sound_muted.png')
+
+    k.loadSprite('present', './sprites/present.png')
+
+    // bedroom
     k.loadSprite('bed', './furniture/bed.png');
     k.loadSprite('table', './furniture/table.png');
     k.loadSprite('window', './furniture/window.png');
     k.loadSprite('dresser', './furniture/dresser.png');
     k.loadSprite('laundry', './sprites/laundry.png')
+
+    // hallway
     k.loadSprite('stairs', './images/stairs.png')
+
+    // stairwell
     k.loadSprite('stairwell', './images/stairwell.png')
-    k.loadSprite('sound_unmuted', './images/sound_unmuted.png')
-    k.loadSprite('sound_muted', './images/sound_muted.png')
+
+    // bathroom
+    k.loadSprite('bathroom_sink', './furniture/bathroom_sink.png')
+    k.loadSprite('mirror_background', './images/mirror_background.png')
+    k.loadSprite('you', './images/you.png')
+    k.loadSprite('toilet', './furniture/toilet.png')
+    k.loadSprite('bath', './furniture/bath.png')
 
     // sounds
     k.loadSound('interact', './sounds/interact.wav')
@@ -62,6 +81,9 @@ export default async function initGame() {
     initHallway(k)
     initStairwell(k)
     initIntro(k)
+    initBathroom(k)
+    initBathroom_mirror(k)
+    initSpare1(k)
 
     // starting game!!
     let bgm = k.play('intro_bgm', {
@@ -69,9 +91,10 @@ export default async function initGame() {
         loop: true,
         paused: true,
     })
-    k.go('intro', bgm)
+    // k.go('intro', bgm)
     // k.go('bedroom', k.center(), 'down', bgm)
     // k.go('hallway', k.center().add(k.vec2(50, 0)), 'down', bgm)
     // k.go('stairwell', k.center().sub(k.vec2(-200, 50)), 'left', bgm)
+    k.go('spare1', k.center(), 'right', bgm)
     
 }
