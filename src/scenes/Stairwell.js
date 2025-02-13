@@ -1,4 +1,5 @@
 import drawCurLocation from "../components/CurrentLocation";
+import initDebug from "../components/debug";
 import makePlayer from "../entities/Player";
 import makeRoom from "../entities/Room";
 import { isMuted } from "../ReactUI";
@@ -10,7 +11,7 @@ import { isMuted } from "../ReactUI";
  * @param {import("kaplay").KAPLAYCtx} k
  */
 export default function initStairwell(k) {
-    k.scene('stairwell', (playerPos, direction, bgm) => {
+    k.scene('stairwell', (data, bgm) => {
         k.onUpdate(() => {
                     if (!isMuted) {
                         bgm.paused = false;
@@ -18,10 +19,12 @@ export default function initStairwell(k) {
                         bgm.stop()
                     }
                 })
-        k.setCamPos(playerPos)
-        let player = makePlayer(k, playerPos, 400, direction);
+        k.setCamPos(data.playerPos)
+        let player = makePlayer(k, data.playerPos, 400, data.direction);
 
         drawCurLocation(k, 'stairs')
+
+        initDebug(k, player)
 
         k.add([
             k.sprite('stairwell'),
@@ -34,19 +37,28 @@ export default function initStairwell(k) {
         makeRoom(k, 300, 100, 4, k.center().add(k.vec2(90, 70)))
 
         let hallway_stairs = k.add([
-            k.sprite('stairs'),
-            k.scale(1),
-            k.area({ shape: new k.Rect(k.vec2(0, 0), 40, 150) }),
+            k.area({ shape: new k.Rect(k.vec2(0, 0), 40, 200) }),
             k.anchor('right'),
-            k.pos(k.center().sub(k.vec2(-260, 65))),
-            k.layer('bg'),
-            k.z(-1),
-            'stairs_entry'
+            k.pos(k.center().sub(-260, 65)),
+        ])
+
+        let down_stairs = k.add([
+            k.area({ shape: new k.Rect(k.vec2(0, 0), 40, 350) }),
+            k.anchor('right'),
+            k.pos(k.center().sub(-260, -250)),
         ])
 
         player.onCollide(() => {
             if (player.isColliding(hallway_stairs)) {
-                k.go('hallway', k.center().sub(k.vec2(160, -170)), 'right', bgm)
+                data.playerPos = k.center().sub(160, -170)
+                data.direction = 'right'
+                k.go('hallway', data, bgm)
+            }
+
+            if (player.isColliding(down_stairs)) {
+                data.playerPos = k.center().sub(180, 0)
+                data.direction = 'right'
+                k.go('downstairs', data, bgm)
             }
         })       
     })
