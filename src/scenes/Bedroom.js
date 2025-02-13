@@ -2,7 +2,9 @@ import drawCurLocation from "../components/CurrentLocation";
 import initDebug from "../components/debug";
 import makeDialog from "../components/Dialogue";
 import makeDoor from "../components/Door";
+import openPresent from "../components/Present";
 import makePlayer, { checkProximity } from "../entities/Player";
+import makePresent from "../entities/Present";
 import makeProp from "../entities/Prop";
 import makeRoom from "../entities/Room";
 import { isMuted } from "../ReactUI";
@@ -27,17 +29,36 @@ export default function initBedroom(k) {
         drawCurLocation(k, 'bedroom')
         
         initDebug(k, player)        
+        
+        let present = null
 
         let dialog = null
         k.onKeyPress('space', () => {
             if (player.rec_coll != null && 
                 checkProximity(player, player.rec_coll) < 17) {
-                const dialog_pos = k.center().add(k.vec2(0, k.height()/2 - 100))
                 let dialog_text = null
                 k.debug.log('interacting with ' + player.rec_coll.tags[1])
                 switch (player.rec_coll.tags[1]) {
                     case 'table':
-                        dialog_text = "i didn't have time to draw all the table things..."
+                        if (present != null) {
+                            dialog_text = "you open the present on the table..."
+                            data.flags.push('opened3')
+                            present.destroy()
+                            present = null
+                            k.wait(2, () => {
+                                openPresent(k, 'toy')
+                            })
+                            k.wait(3.5, () => {
+                                if (dialog != null && !dialog[0].isDestroyed) {
+                                    dialog[0].destroy()
+                                    dialog[1].destroy()
+                                }
+                                dialog = makeDialog(k, "you found a cute little thing! who could have left him here?", 5)
+                            })
+                            break
+                        } else {
+                            dialog_text = "i didn't have time to draw all the table things..."
+                        }
                         break
                     case 'bed':
                         dialog_text = "it's your bed!! you love your bed"
@@ -64,7 +85,7 @@ export default function initBedroom(k) {
                 }
                 if (dialog_text != null) {
                     k.play('interact', { volume: 1 })
-                    dialog = makeDialog(k, dialog_text, dialog_pos)
+                    dialog = makeDialog(k, dialog_text)
                 }
             }
         })
@@ -97,6 +118,12 @@ export default function initBedroom(k) {
             k.layer('game'),
             'laundry',
         ]);
+
+        for (let i = 0; i < data.flags.length; i++) {
+            if (data.flags[i].includes('opened') && !data.flags.includes('opened3')) {
+                present = makePresent(k, k.center().sub(0, 230))
+            }
+        }
 
         makeDoor(k, k.center().sub(k.vec2(roomWidth/2 + 6, -roomHeight/2 + 110)), 'hallway-door')
     })

@@ -4,8 +4,6 @@ import makeDialog from "../components/Dialogue";
 import makeDoor from "../components/Door";
 import openPresent from "../components/Present";
 import makePlayer, { checkProximity } from "../entities/Player";
-import makePresent from "../entities/Present";
-import makeProp from "../entities/Prop";
 import makeRoom from "../entities/Room";
 import { isMuted } from "../ReactUI";
 
@@ -34,12 +32,31 @@ export default function initSpare2(k) {
         k.onKeyPress('space', () => {
                     if (player.rec_coll != null && 
                         checkProximity(player, player.rec_coll) < 17) {
-                        const dialog_pos = k.center().add(k.vec2(0, 400))
                         let dialog_text = null
                         k.debug.log('interacting with ' + player.rec_coll.tags[1])
                         switch (player.rec_coll.tags[1]) {
                             case 'bed':
                                 dialog_text = 'wow. a lot of clothes.'
+                                break
+                            case 'closet':
+                                dialog_text = 'you open the closet and...'
+                                data.flags.push('opened2')
+                                k.wait(2, () => {
+                                    openPresent(k, 'note')
+                                    closet.sprite = 'closet_door_open'
+                                    closet.untag('closet')
+                                    closet.tag('closet_open')
+                                })
+                                k.wait(3.5, () => {
+                                    if (dialog != null && !dialog[0].isDestroyed) {
+                                        dialog[0].destroy()
+                                        dialog[1].destroy()
+                                    }
+                                    dialog = makeDialog(k, "you found a note!")
+                                })
+                                break
+                            case 'closet_open':
+                                dialog_text = "there's nothing else in the closet"
                                 break
                             case 'hallway-door':
                                 player.rec_coll = null
@@ -55,7 +72,7 @@ export default function initSpare2(k) {
                         }
                         if (dialog_text != null) {
                             k.play('interact', { volume: 1 })
-                            dialog = makeDialog(k, dialog_text, dialog_pos)
+                            dialog = makeDialog(k, dialog_text)
                         }
                     }
                 });
@@ -71,5 +88,21 @@ export default function initSpare2(k) {
             k.layer('game'),
             'bed'
         ])
+
+        let closet = k.add([
+            k.sprite('closet_door'),
+            k.area({ shape: new k.Rect(k.vec2(0), 200, 250) }),
+            k.scale(0.7),
+            k.body( {isStatic: true} ),
+            k.pos(k.center().sub(260, 490)),
+            k.layer('game')
+        ])
+
+        if (data.flags.includes('opened2')) {
+            closet.sprite = 'closet_door_open'
+            closet.tag('closet_open')
+        } else {
+            closet.tag('closet')
+        }
     })
 }
