@@ -150,18 +150,6 @@ export default async function initGame() {
     initFinale(k)
 
     // starting game!!
-    let bgm = k.play('intro_bgm', {
-        volume: 0.5,
-        loop: true,
-        paused: true,
-    })
-
-    let data = {
-        playerPos: k.center(),
-        direction: 'down',
-        flags: [],
-    }
-    // k.go('intro', bgm)
-    k.go('finale', data, bgm)
+    k.go('menu')
     
 }

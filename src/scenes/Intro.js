@@ -7,7 +7,36 @@ import { isMuted } from "../ReactUI";
  * @param {import("kaplay").KAPLAYCtx} k 
  */
 export default function initIntro(k) {
-    k.scene('intro', (bgm) => {
+    k.scene('menu', () => {
+        k.add([
+            k.pos(k.center()),
+            k.anchor('center'),
+            k.text("press space to play", {
+                size: 64,
+                font: 'gaegu',
+            }),
+            k.color(0, 0, 0),
+            k.fixed(),
+            k.layer('fg'),
+            k.z(2)
+        ])
+
+        k.onKeyPress('space', () => {
+            let bgm = k.play('intro_bgm', {
+                volume: 0.5,
+                loop: true,
+                paused: true,
+            })
+        
+            let data = {
+                playerPos: k.center(),
+                direction: 'down',
+                flags: ['opened1', 'opened2', 'opened3', 'opened4'],
+            }
+            k.go('intro', data, bgm)
+        })
+    })
+    k.scene('intro', (data, bgm) => {
         k.onUpdate(() => {
             if (!isMuted) {
                 bgm.paused = false;
@@ -57,7 +86,9 @@ export default function initIntro(k) {
                     loop: true,
                     paused: true,
                 })
-                k.go('bedroom', k.center(), 'down', bgm)
+                data.playerPos = k.center()
+                data.direction = 'down'
+                k.go('bedroom', data, bgm)
             }
             progress++
         })

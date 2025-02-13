@@ -6,7 +6,6 @@ import makeDialog from "../components/Dialogue";
  */
 export default function initFinale(k) {
     k.scene('finale', (data, bgm) => {
-        read_letter(k)
         bgm.stop()
 
         k.setCamPos(k.center())
@@ -164,8 +163,8 @@ function end_screen(k) {
         k.add([
             k.pos(k.center()),
             k.anchor('center'),
-            k.text("happy valentine's day", {
-                size: 32,
+            k.text("happy valentine's day, my love", {
+                size: 64,
                 font: 'gaegu',
             }),
             k.color(0, 0, 0),
@@ -173,20 +172,6 @@ function end_screen(k) {
             k.layer('fg'),
             k.z(2)
         ])
-        
-        k.onKeyDown('space', () => {
-            let data = {
-                playerPos: k.center(),
-                direction: 'down',
-                flags: []
-            }
-            let bgm = k.play('bedroom_bgm', {
-                volume: 0.5,
-                loop: true,
-                paused: true,
-            })
-            k.go('bedroom', data, bgm)
-        })
     })
     k.go('end_screen')
 }

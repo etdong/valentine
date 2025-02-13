@@ -83,6 +83,9 @@ export default function initDownstairs(k) {
                     case 'living_table':
                         dialog_text = "remember when we slept here that one night?"
                         break
+                    case 'mantle':
+                        dialog_text = "watching camping videos while eating is our specialty"
+                        break
                     default:
                         break
                 }
