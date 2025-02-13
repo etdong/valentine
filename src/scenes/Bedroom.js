@@ -12,7 +12,8 @@ import { isMuted } from "../ReactUI";
  * @param {import("kaplay").KAPLAYCtx} k
  */
 export default function initBedroom(k) {
-    return k.scene('bedroom', (playerPos, direction, bgm) => {
+    return k.scene('bedroom', (data, bgm) => {
+        k.debug.log(data)
         k.onUpdate(() => {
                     if (!isMuted) {
                         bgm.paused = false;
@@ -20,8 +21,8 @@ export default function initBedroom(k) {
                         bgm.stop()
                     }
                 })
-        k.setCamPos(playerPos)
-        let player = makePlayer(k, playerPos, 400, direction);
+        k.setCamPos(data.playerPos)
+        let player = makePlayer(k, data.playerPos, 400, data.direction);
         
         drawCurLocation(k, 'bedroom')
         
@@ -50,7 +51,9 @@ export default function initBedroom(k) {
                     case 'hallway-door':
                         player.rec_coll = null
                         k.play('door_open', { volume: 0.3, speed: 1.2 })
-                        k.go('hallway', k.center().add(k.vec2(50, 0)), 'left', bgm)
+                        data.playerPos = k.center().add(50, -50)
+                        data.direction = 'left'
+                        k.go('hallway', data, bgm)
                         return
                     default:
                         break

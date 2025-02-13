@@ -12,7 +12,8 @@ import { isMuted } from "../ReactUI";
  * @param {import("kaplay").KAPLAYCtx} k
  */
 export default function initBathroom(k) {
-    return k.scene('bathroom', (playerPos, direction, bgm) => {
+    return k.scene('bathroom', (data, bgm) => {
+        k.debug.log(data)
         k.onUpdate(() => {
             if (!isMuted) {
                 bgm.paused = false;
@@ -21,8 +22,8 @@ export default function initBathroom(k) {
             }
         })
 
-        k.setCamPos(playerPos)
-        let player = makePlayer(k, playerPos, 400, direction);
+        k.setCamPos(data.playerPos)
+        let player = makePlayer(k, data.playerPos, 400, data.direction);
 
         initDebug(k, player)
 
@@ -39,7 +40,9 @@ export default function initBathroom(k) {
                         dialog_text = "ploop"
                         break
                     case 'bathroom_sink':
-                        k.go('bathroom_mirror', k.center(), 'up', bgm)
+                        data.playerPos = k.center()
+                        data.direction = 'up'
+                        k.go('bathroom_mirror', data, bgm)
                         break
                     case 'bath':
                         dialog_text = "you don't have time for a shower right now (stinky)"
@@ -47,7 +50,9 @@ export default function initBathroom(k) {
                     case 'hallway-door':
                         player.rec_coll = null
                         k.play('door_open', { volume: 0.3, speed: 1.2 })
-                        k.go('hallway', k.center().add(k.vec2(-50, 0)), 'right', bgm)
+                        data.playerPos = k.center().add(-50, 0)
+                        data.direction = 'right'
+                        k.go('hallway', data, bgm)
                         return
                     default:
                         break

@@ -7,7 +7,7 @@ import { isMuted } from "../ReactUI";
  * @param {import("kaplay").KAPLAYCtx} k
  */
 export default function initBathroom_mirror(k) {
-    return k.scene('bathroom_mirror', (playerPos, direction, bgm) => {
+    return k.scene('bathroom_mirror', (data, bgm) => {
         k.onUpdate(() => {
             if (!isMuted) {
                 bgm.paused = false;
@@ -16,7 +16,7 @@ export default function initBathroom_mirror(k) {
             }
         })  
 
-        k.setCamPos(playerPos)
+        k.setCamPos(data.playerPos)
 
         k.add([
             k.sprite('you'),
@@ -33,7 +33,9 @@ export default function initBathroom_mirror(k) {
         }) 
 
         k.onKeyPress('space', () => {
-            k.go('bathroom', k.center().sub(60, 80), 'up', bgm)
+            data.playerPos = k.center().sub(60, 80)
+            data.direction = 'up'
+            k.go('bathroom', data, bgm)
         })
     })
 }
