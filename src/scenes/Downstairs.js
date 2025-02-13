@@ -282,6 +282,16 @@ export default function initDownstairs(k) {
             k.pos(k.center().add(-850, 120)),
             'tv'
         ])
+
+        k.add([
+            k.rect(3, 500),
+            k.pos(k.center().add(-96, 800)),
+            k.color(0, 0, 0),
+            k.area(),
+            k.body({isStatic: true}),
+            k.layer('bg'),
+            "wall"
+        ]);
         
 
         player.onCollide(() => {
