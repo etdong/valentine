@@ -12,7 +12,7 @@ export default function makeDialog(k, text, lifetime = 3, size = 48) {
             k.z(2)
         ])
     const dialogBox = k.add([
-        k.rect(dialogText.width + 64, size + 32),
+        k.rect(dialogText.width + 64, dialogText.height + 32),
         k.anchor('bot'),
         k.pos(k.center().add(k.vec2(0, k.height()/2 - 100))),
         k.outline(4),

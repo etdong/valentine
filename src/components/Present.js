@@ -4,7 +4,9 @@ import makeDialog from "./Dialogue";
  * 
  * @param {import("kaplay").KAPLAYCtx} k
  */
-export default function openPresent(k, present_type) {
+export default function openPresent(k, present_type, player) {
+    player.frozen = true;
+
     let present = k.add([
         k.sprite('present_open0'),
         k.anchor('center'),
@@ -24,11 +26,13 @@ export default function openPresent(k, present_type) {
         present.destroy()
     })
 
+    let item = null
+    let dialog = null
     k.wait(1.5, () => {
         switch (present_type) {
             case 'figure':
                 {
-                    let figure = k.add([
+                    item = k.add([
                         k.sprite('figure'),
                         k.anchor('center'),
                         k.scale(3),
@@ -36,15 +40,12 @@ export default function openPresent(k, present_type) {
                         k.layer('fg'),
                         k.fixed(),
                     ]);
-                    makeDialog(k, "it's a figure! (i wonder who made that...)", 5)
-                    k.onKeyPress('space', () => {
-                        figure.destroy()
-                    })
+                    dialog = makeDialog(k, "it's a figure! (i wonder who made that...)", 0)
                     break
                 }
             case 'note':
                 {
-                    let note = k.add([
+                    item = k.add([
                         k.sprite('note'),
                         k.anchor('center'),
                         k.scale(2),
@@ -52,14 +53,12 @@ export default function openPresent(k, present_type) {
                         k.layer('fg'),
                         k.fixed(),
                     ])
-                    k.onKeyPress('space', () => {
-                        note.destroy()
-                    })
+                    dialog = makeDialog(k, "you found a note!", 0)
                     break
                 }
             case 'toy':
                 {
-                    let toy = k.add([
+                    item = k.add([
                         k.sprite('toy'),
                         k.anchor('center'),
                         k.scale(4),
@@ -67,12 +66,32 @@ export default function openPresent(k, present_type) {
                         k.layer('fg'),
                         k.fixed(),
                     ])
-                    k.onKeyPress('space', () => {
-                        toy.destroy()
-                    })
+                    dialog = makeDialog(k, "you found a cute little thing! who could have left him here?", 0)
                     break
                 }
+            case 'magnet':
+                {
+                    item = k.add([
+                        k.sprite('magnet'),
+                        k.anchor('center'),
+                        k.scale(3),
+                        k.pos(k.center()),
+                        k.layer('fg'),
+                        k.fixed(),
+                    ])
+                    dialog = makeDialog(k, "you found a magnet!", 0)
+                    break 
+                }
                 
+        }
+    })
+
+    k.onKeyPress('space', () => {
+        if (item != null && dialog != null) {
+            item.destroy()
+            dialog[0].destroy()
+            dialog[1].destroy()
+            player.frozen = false
         }
     })
     

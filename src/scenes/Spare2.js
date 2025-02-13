@@ -31,6 +31,7 @@ export default function initSpare2(k) {
         let dialog = null
         k.onKeyPress('space', () => {
                     if (player.rec_coll != null && 
+                        !player.frozen &&
                         checkProximity(player, player.rec_coll) < 17) {
                         let dialog_text = null
                         k.debug.log('interacting with ' + player.rec_coll.tags[1])
@@ -39,20 +40,14 @@ export default function initSpare2(k) {
                                 dialog_text = 'wow. a lot of clothes.'
                                 break
                             case 'closet':
+                                player.frozen = true
                                 dialog_text = 'you open the closet and...'
                                 data.flags.push('opened2')
                                 k.wait(2, () => {
-                                    openPresent(k, 'note')
+                                    openPresent(k, 'note', player)
                                     closet.sprite = 'closet_door_open'
                                     closet.untag('closet')
                                     closet.tag('closet_open')
-                                })
-                                k.wait(3.5, () => {
-                                    if (dialog != null && !dialog[0].isDestroyed) {
-                                        dialog[0].destroy()
-                                        dialog[1].destroy()
-                                    }
-                                    dialog = makeDialog(k, "you found a note!")
                                 })
                                 break
                             case 'closet_open':

@@ -34,6 +34,8 @@ export default async function initGame() {
         },
     });
 
+    k.loadSprite('blank', './images/blank.png')
+
     // sounds
     k.loadSprite('sound_unmuted', './images/sound_unmuted.png')
     k.loadSprite('sound_muted', './images/sound_muted.png')
@@ -53,6 +55,7 @@ export default async function initGame() {
     k.loadSprite('toy', './sprites/toy.png')
     k.loadSprite('note', './sprites/note.png')
     k.loadSprite('figure', './sprites/figure.png')
+    k.loadSprite('magnet', './sprites/magnet.png')
 
     // bedroom
     k.loadSprite('bed', './furniture/bed.png');
@@ -83,9 +86,21 @@ export default async function initGame() {
     k.loadSprite('couch', './furniture/couch.png')
     k.loadSprite('couch_2', './furniture/couch_2.png')
     k.loadSprite('couch_3', './furniture/couch_3.png')
+    k.loadSprite('living_table', './furniture/living_table.png')
+    k.loadSprite('living_mantle', './furniture/living_mantle.png')
+    k.loadSprite('living_tv', './furniture/living_tv.png')
 
     // kitchen
     k.loadSprite('kitchen_island', './furniture/kitchen_island.png')
+    k.loadSprite('kitchen_counter1', './furniture/kitchen_counter1.png')
+    k.loadSprite('kitchen_counter2', './furniture/kitchen_counter2.png')
+    k.loadSprite('kitchen_counter3', './furniture/kitchen_counter3.png')
+    k.loadSprite('kitchen_fridge', './furniture/kitchen_fridge.png')
+    k.loadSprite('kitchen_pantry', './furniture/kitchen_pantry.png')
+    k.loadSprite('kitchen_stove', './furniture/kitchen_stove.png')
+    k.loadSprite('kitchen_table', './furniture/kitchen_table.png')
+    k.loadSprite('kitchen_chair', './furniture/kitchen_chair.png')
+    k.loadSprite('kitchen_chair_left', './furniture/kitchen_chair_left.png')
     
 
 
@@ -120,7 +135,7 @@ export default async function initGame() {
     })
 
     let data = {
-        playerPos: k.center(),
+        playerPos: k.center().add(0, 400),
         direction: 'down',
         flags: [],
     }

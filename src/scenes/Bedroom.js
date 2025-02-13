@@ -35,25 +35,20 @@ export default function initBedroom(k) {
         let dialog = null
         k.onKeyPress('space', () => {
             if (player.rec_coll != null && 
+                !player.frozen &&
                 checkProximity(player, player.rec_coll) < 17) {
                 let dialog_text = null
                 k.debug.log('interacting with ' + player.rec_coll.tags[1])
                 switch (player.rec_coll.tags[1]) {
                     case 'table':
                         if (present != null) {
+                            player.frozen = true
                             dialog_text = "you open the present on the table..."
                             data.flags.push('opened3')
                             present.destroy()
                             present = null
                             k.wait(2, () => {
-                                openPresent(k, 'toy')
-                            })
-                            k.wait(3.5, () => {
-                                if (dialog != null && !dialog[0].isDestroyed) {
-                                    dialog[0].destroy()
-                                    dialog[1].destroy()
-                                }
-                                dialog = makeDialog(k, "you found a cute little thing! who could have left him here?", 5)
+                                openPresent(k, 'toy', player)
                             })
                             break
                         } else {

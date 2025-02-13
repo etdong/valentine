@@ -15,35 +15,47 @@ export default function makePlayer(k, posVec2, speed, direction='down') {
         k.area({ shape: new k.Rect(k.vec2(0), 6, 2)}),
         k.body(),
         k.pos(posVec2),
-        k.layer('fg'),
+        k.layer('game'),
+        k.z(10),
         'player',
         {
             direction: direction,
             dir_vec: k.vec2(0, 0),
             rec_coll: null,
+            frozen: false
         }
     ]);
 
-    k.onKeyDown(['w', 'up'], () => {
-        player.dir_vec = k.vec2(0, -1)
-        player.move(k.vec2(0, -1).scale(speed))
-        player.direction = "up"
-    });
-    k.onKeyDown(['a', 'left'], () => {
-        player.dir_vec = k.vec2(-1, 0)
-        player.move(k.vec2(-1, 0).scale(speed))
-        player.direction = "left"
-    });
-    k.onKeyDown(['s', 'down'], () => {
-        player.dir_vec = k.vec2(0, 1)
-        player.move(k.vec2(0, 1).scale(speed))
-        player.direction = "down"
-    })
-    k.onKeyDown(['d', 'right'], () => {
-        player.dir_vec = k.vec2(1, 0)
-        player.move(k.vec2(1, 0).scale(speed))
-        player.direction = "right"
-    });
+    
+        k.onKeyDown(['w', 'up'], () => {
+            if (!player.frozen) {
+            player.dir_vec = k.vec2(0, -1)
+            player.move(k.vec2(0, -1).scale(speed))
+            player.direction = "up"
+            }
+        });
+        k.onKeyDown(['a', 'left'], () => {
+            if (!player.frozen) {
+                player.dir_vec = k.vec2(-1, 0)
+            player.move(k.vec2(-1, 0).scale(speed))
+            player.direction = "left"
+            }
+        });
+        k.onKeyDown(['s', 'down'], () => {
+            if (!player.frozen) {
+                player.dir_vec = k.vec2(0, 1)
+            player.move(k.vec2(0, 1).scale(speed))
+            player.direction = "down"
+            }
+        })
+        k.onKeyDown(['d', 'right'], () => {
+            if (!player.frozen) {
+                player.dir_vec = k.vec2(1, 0)
+            player.move(k.vec2(1, 0).scale(speed))
+            player.direction = "right"
+            }
+        });
+    
 
     player.onCollide((object) => {
         player.rec_coll = object

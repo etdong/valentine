@@ -34,6 +34,7 @@ export default function initSpare1(k) {
         let dialog = null
         k.onKeyPress('space', () => {
                     if (player.rec_coll != null && 
+                        !player.frozen &&
                         checkProximity(player, player.rec_coll) < 17) {
                         let dialog_text = null
                         k.debug.log('interacting with ' + player.rec_coll.tags[1])
@@ -43,7 +44,7 @@ export default function initSpare1(k) {
                                 player.rec_coll.destroy()
                                 player.rec_coll = null
                                 k.play('interact')
-                                openPresent(k, 'figure')
+                                openPresent(k, 'figure', player)
                                 break
                             case 'hallway-door':
                                 player.rec_coll = null
