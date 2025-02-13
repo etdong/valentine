@@ -35,7 +35,6 @@ export default function initSpare1(k) {
         k.onKeyPress('space', () => {
                     if (player.rec_coll != null && 
                         checkProximity(player, player.rec_coll) < 17) {
-                        const dialog_pos = k.center().add(k.vec2(0, 400))
                         let dialog_text = null
                         k.debug.log('interacting with ' + player.rec_coll.tags[1])
                         switch (player.rec_coll.tags[1]) {
@@ -44,8 +43,7 @@ export default function initSpare1(k) {
                                 player.rec_coll.destroy()
                                 player.rec_coll = null
                                 k.play('interact')
-                                k.play('open_present', { volume: 1, speed: 1 })
-                                openPresent(k, k.center().add(50, 50), 'figure')
+                                openPresent(k, 'figure')
                                 break
                             case 'hallway-door':
                                 player.rec_coll = null
@@ -61,7 +59,7 @@ export default function initSpare1(k) {
                         }
                         if (dialog_text != null) {
                             k.play('interact', { volume: 1 })
-                            dialog = makeDialog(k, dialog_text, dialog_pos)
+                            dialog = makeDialog(k, dialog_text)
                         }
                     }
                 });
