@@ -5,6 +5,7 @@ import initBedroom from "./scenes/Bedroom";
 import initHallway from "./scenes/Hallway";
 import initIntro from "./scenes/Intro";
 import initSpare1 from "./scenes/Spare1";
+import initSpare2 from "./scenes/Spare2";
 import initStairwell from "./scenes/Stairwell";
 
 export default async function initGame() {
@@ -36,6 +37,8 @@ export default async function initGame() {
     k.loadSprite('sound_muted', './images/sound_muted.png')
 
     k.loadSprite('present', './sprites/present.png')
+    k.loadSprite('present_open1', './sprites/present_open1.png')
+    k.loadSprite('present_open2', './sprites/present_open2.png')
 
     // bedroom
     k.loadSprite('bed', './furniture/bed.png');
@@ -57,11 +60,20 @@ export default async function initGame() {
     k.loadSprite('toilet', './furniture/toilet.png')
     k.loadSprite('bath', './furniture/bath.png')
 
+    // spare room 1
+    k.loadSprite('figure', './sprites/figure.png')
+
+    // spare room 2
+    k.loadSprite('spare2_bed', './furniture/spare2_bed.png')
+    k.loadSprite('closet_door', './furniture/closet_door.png')
+    k.loadSprite('closet_door_open', './furniture/closet_door_open.png')
+
     // sounds
     k.loadSound('interact', './sounds/interact.wav')
     k.loadSound('door_open', './sounds/door_open.mp3')
     k.loadSound('intro_bgm', './sounds/intro_bgm.mp3')
     k.loadSound('bedroom_bgm', './sounds/bedroom_bgm.mp3')
+    k.loadSound('open_present', './sounds/open_present.mp3')
 
 
     // camera zoom initialization
@@ -84,17 +96,24 @@ export default async function initGame() {
     initBathroom(k)
     initBathroom_mirror(k)
     initSpare1(k)
+    initSpare2(k)
 
     // starting game!!
-    let bgm = k.play('intro_bgm', {
+    let bgm = k.play('bedroom_bgm', {
         volume: 0.5,
         loop: true,
         paused: true,
     })
+
+    let data = {
+        playerPos: k.center(),
+        direction: 'down',
+        flags: [],
+    }
     // k.go('intro', bgm)
     // k.go('bedroom', k.center(), 'down', bgm)
     // k.go('hallway', k.center().add(k.vec2(50, 0)), 'down', bgm)
     // k.go('stairwell', k.center().sub(k.vec2(-200, 50)), 'left', bgm)
-    k.go('spare1', k.center(), 'right', bgm)
+    k.go('spare2', data, bgm)
     
 }

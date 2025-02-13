@@ -11,7 +11,9 @@ import { isMuted } from '../ReactUI';
  * @param {import("kaplay").KAPLAYCtx} k 
  */
 export default function initHallway(k) {
-    k.scene('hallway', (playerPos, direction, bgm) => {
+    k.scene('hallway', (data, bgm) => {
+        k.debug.log(data)
+
         k.onUpdate(() => {
             if (!isMuted) {
                 bgm.paused = false;
@@ -20,8 +22,8 @@ export default function initHallway(k) {
             }
         })
 
-        k.setCamPos(playerPos)
-        let player = makePlayer(k, playerPos, 400, direction);
+        k.setCamPos(data.playerPos)
+        let player = makePlayer(k, data.playerPos, 400, data.direction);
 
         drawCurLocation(k, 'hallway')
 
@@ -36,19 +38,32 @@ export default function initHallway(k) {
                 k.debug.log('interacting with ' + player.rec_coll.tags[1])
                 switch (player.rec_coll.tags[1]) {
                     case 'bedroom-door':
-                    player.rec_coll = null
-                    k.play('door_open', { volume: 0.3, speed: 1.2 })
-                    k.go('bedroom', k.center().sub(150, -100), 'right', bgm)
+                        player.rec_coll = null
+                        k.play('door_open', { volume: 0.3, speed: 1.2 })
+                        data.direction = 'right'
+                        data.playerPos = k.center().sub(150, -100)
+                        k.go('bedroom', data, bgm)
                         return
                     case 'bathroom-door':
                         player.rec_coll = null
                         k.play('door_open', { volume: 0.3, speed: 1.2 })
-                        k.go('bathroom', k.center(), 'left', bgm)
+                        data.playerPos = k.center()
+                        data.direction = 'left'
+                        k.go('bathroom', data, bgm)
                         return
                     case 'spare room 1-door':
                         player.rec_coll = null
                         k.play('door_open', { volume: 0.3, speed: 1.2 })
-                        k.go('spare1', k.center(), 'right', bgm)
+                        data.playerPos = k.center()
+                        data.direction = 'right'
+                        k.go('spare1', data, bgm)
+                        return
+                    case 'spare room 2-door':
+                        player.rec_coll = null
+                        k.play('door_open', { volume: 0.3, speed: 1.2 })
+                        data.playerPos = k.center()
+                        data.direction = 'left'
+                        k.go('spare2', data, bgm)
                         return
                     default:
                         break
