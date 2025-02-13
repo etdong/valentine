@@ -33,7 +33,6 @@ export default function initHallway(k) {
         k.onKeyPress('space', () => {
             if (player.rec_coll != null && 
                 checkProximity(player, player.rec_coll) < 17) {
-                const dialog_pos = k.center().add(k.vec2(0, 400))
                 let dialog_text = null
                 k.debug.log('interacting with ' + player.rec_coll.tags[1])
                 switch (player.rec_coll.tags[1]) {
@@ -73,7 +72,8 @@ export default function initHallway(k) {
                     dialog[1].destroy()
                 }
                 if (dialog_text != null) {
-                    dialog = makeDialog(k, dialog_text, dialog_pos)
+                    k.play('interact')
+                    dialog = makeDialog(k, dialog_text)
                 }
             }
         })
@@ -114,12 +114,13 @@ export default function initHallway(k) {
             k.area({ shape: new k.Rect(k.vec2(-100, 0), 40, 150) }),
             k.anchor('right'),
             k.pos(k.center().sub(k.vec2(100, -150))),
-            'stairs_entry'
         ])
 
         player.onCollide(() => {
             if (player.isColliding(stairs)) {
-                k.go('stairwell', k.center().sub(k.vec2(-200, 50)), 'left', bgm)
+                data.playerPos = k.center().sub(-200, 50)
+                data.direction = 'left'
+                k.go('stairwell', data, bgm)
             }
         })
         
