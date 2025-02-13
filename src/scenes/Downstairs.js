@@ -32,7 +32,6 @@ export default function initDownstairs(k) {
                 !player.frozen &&
                 checkProximity(player, player.rec_coll) < 17) {
                 let dialog_text = null
-                k.debug.log('interacting with ' + player.rec_coll.tags[1])
                 switch (player.rec_coll.tags[1]) {
                     case 'counter1':
                         dialog_text = "this air fryer has been so useful at 1AM"

@@ -1,5 +1,4 @@
 import drawCurLocation from "../components/CurrentLocation";
-import initDebug from "../components/debug";
 import makeDialog from "../components/Dialogue";
 import makeDoor from "../components/Door";
 import makePlayer, { checkProximity } from "../entities/Player";
@@ -13,7 +12,6 @@ import { isMuted } from "../ReactUI";
  */
 export default function initBathroom(k) {
     return k.scene('bathroom', (data, bgm) => {
-        k.debug.log(data)
         k.onUpdate(() => {
             if (!isMuted) {
                 bgm.paused = false;
@@ -25,8 +23,6 @@ export default function initBathroom(k) {
         k.setCamPos(data.playerPos)
         let player = makePlayer(k, data.playerPos, 400, data.direction);
 
-        initDebug(k, player)
-
         drawCurLocation(k, 'bathroom')      
 
         let dialog = null
@@ -34,7 +30,6 @@ export default function initBathroom(k) {
             if (player.rec_coll != null && 
                 checkProximity(player, player.rec_coll) < 17) {
                 let dialog_text = null
-                k.debug.log('interacting with ' + player.rec_coll.tags[1])
                 switch (player.rec_coll.tags[1]) {
                     case 'toilet':
                         dialog_text = "ploop"

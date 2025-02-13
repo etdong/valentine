@@ -1,5 +1,4 @@
 import drawCurLocation from "../components/CurrentLocation";
-import initDebug from "../components/debug";
 import makeDialog from "../components/Dialogue";
 import makeDoor from "../components/Door";
 import openPresent from "../components/Present";
@@ -15,7 +14,6 @@ import { isMuted } from "../ReactUI";
  */
 export default function initBedroom(k) {
     return k.scene('bedroom', (data, bgm) => {
-        k.debug.log(data)
         k.onUpdate(() => {
                     if (!isMuted) {
                         bgm.paused = false;
@@ -27,9 +25,7 @@ export default function initBedroom(k) {
         let player = makePlayer(k, data.playerPos, 400, data.direction);
         
         drawCurLocation(k, 'bedroom')
-        
-        initDebug(k, player)        
-        
+                
         let present = null
 
         let dialog = null
@@ -38,7 +34,6 @@ export default function initBedroom(k) {
                 !player.frozen &&
                 checkProximity(player, player.rec_coll) < 17) {
                 let dialog_text = null
-                k.debug.log('interacting with ' + player.rec_coll.tags[1])
                 switch (player.rec_coll.tags[1]) {
                     case 'table':
                         if (present != null) {

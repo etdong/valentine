@@ -20,10 +20,9 @@ export default function initIntro(k) {
         makePlayer(k, k.center(), 400, 'down');
         let dialog = null
         let progress = -1
-        const dialog_pos = k.center().add(k.vec2(0, k.height()/2 - 100))
         if (progress == -1) {
             k.wait(1, () => {
-                dialog = makeDialog(k, "hi baby! how are you doing? (press space)", dialog_pos, 0)
+                dialog = makeDialog(k, "hi baby! how are you doing? (press space)", 0)
                 progress = 1
             })
         }
@@ -37,19 +36,19 @@ export default function initIntro(k) {
                 dialog[1].destroy()
             }
             if (progress == 1) {
-                dialog = makeDialog(k, "i really hope you enjoy this little game i made for you", dialog_pos, 0)
+                dialog = makeDialog(k, "i really hope you enjoy this little game i made for you", 0)
             }
             if (progress == 2) {
-                dialog = makeDialog(k, "i worked pretty hard on it despite what it looks like", dialog_pos, 0)
+                dialog = makeDialog(k, "i worked pretty hard on it despite what it looks like", 0)
             }
             if (progress == 3) {
-                dialog = makeDialog(k, "i hope you have fun exploring the house", dialog_pos, 0)
+                dialog = makeDialog(k, "i hope you have fun exploring the house", 0)
             }
             if (progress == 4) {
-                dialog = makeDialog(k, "i love you so much, have fun!!", dialog_pos, 0)
+                dialog = makeDialog(k, "i love you so much, have fun!!", 0)
             }
             if (progress == 5) {
-                dialog = makeDialog(k, "just remember, WASD or arrow keys to move and SPACE to interact", dialog_pos, 0)
+                dialog = makeDialog(k, "just remember, WASD or arrow keys to move and SPACE to interact", 0)
             }
             if (progress == 6) {
                 bgm.stop()

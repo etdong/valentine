@@ -1,5 +1,4 @@
 import drawCurLocation from "../components/CurrentLocation";
-import initDebug from "../components/debug";
 import makeDialog from "../components/Dialogue";
 import makeDoor from "../components/Door";
 import openPresent from "../components/Present";
@@ -24,7 +23,6 @@ export default function initSpare2(k) {
         k.setCamPos(data.playerPos)
         let player = makePlayer(k, data.playerPos, 400, data.direction);
 
-        initDebug(k, player)
 
         drawCurLocation(k, 'spare room 2')
 
@@ -34,7 +32,6 @@ export default function initSpare2(k) {
                         !player.frozen &&
                         checkProximity(player, player.rec_coll) < 17) {
                         let dialog_text = null
-                        k.debug.log('interacting with ' + player.rec_coll.tags[1])
                         switch (player.rec_coll.tags[1]) {
                             case 'bed':
                                 dialog_text = 'wow. a lot of clothes.'

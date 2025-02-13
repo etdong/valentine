@@ -3,6 +3,7 @@ import initBathroom from "./scenes/Bathroom";
 import initBathroom_mirror from "./scenes/Bathroom_mirror";
 import initBedroom from "./scenes/Bedroom";
 import initDownstairs from "./scenes/Downstairs";
+import initFinale from "./scenes/Finale";
 import initHallway from "./scenes/Hallway";
 import initIntro from "./scenes/Intro";
 import initSpare1 from "./scenes/Spare1";
@@ -45,12 +46,15 @@ export default async function initGame() {
     k.loadSound('intro_bgm', './sounds/intro_bgm.mp3')
     k.loadSound('bedroom_bgm', './sounds/bedroom_bgm.mp3')
     k.loadSound('open_present', './sounds/open_present.mp3')
+    k.loadSound('explode_sound', './sounds/explosion.mp3')
+    k.loadSound('pageturn', './sounds.pageturn.mp3')
 
     // presents
     k.loadSprite('present_open0', './images/present.png')
     k.loadSprite('present_open1', './images/present_open1.png')
     k.loadSprite('present_open2', './images/present_open2.png')
     k.loadSprite('present', './sprites/present.png')
+    k.loadSprite('big_present', './sprites/big_present.png')
 
     k.loadSprite('toy', './sprites/toy.png')
     k.loadSprite('note', './sprites/note.png')
@@ -66,6 +70,8 @@ export default async function initGame() {
 
     // hallway
     k.loadSprite('stairs', './images/stairs.png')
+    k.loadSprite('bonus_table', './furniture/bonus_table.png')
+    k.loadSprite('bonus_tv', './furniture/bonus_tv.png')
 
     // stairwell
     k.loadSprite('stairwell', './images/stairwell.png')
@@ -101,6 +107,21 @@ export default async function initGame() {
     k.loadSprite('kitchen_table', './furniture/kitchen_table.png')
     k.loadSprite('kitchen_chair', './furniture/kitchen_chair.png')
     k.loadSprite('kitchen_chair_left', './furniture/kitchen_chair_left.png')
+
+    // finale
+    k.loadSprite('big_present_scene', './images/big_present_scene.png')
+    k.loadSprite('explosion', './images/explosion.png')
+    k.loadSprite('letter1', './images/letter1.png')
+    k.loadSprite('letter2', './images/letter2.png')
+    k.loadSprite('letter3', './images/letter3.png')
+    k.loadSprite('letter4', './images/letter4.png')
+    k.loadSprite('letter5', './images/letter5.png')
+    k.loadSprite('letter6', './images/letter6.png')
+    k.loadSprite('letter7', './images/letter7.png')
+    k.loadSprite('letter8', './images/letter8.png')
+    k.loadSprite('letter', './images/letter.png')
+
+    
     
 
 
@@ -126,20 +147,21 @@ export default async function initGame() {
     initSpare1(k)
     initSpare2(k)
     initDownstairs(k)
+    initFinale(k)
 
     // starting game!!
-    let bgm = k.play('bedroom_bgm', {
+    let bgm = k.play('intro_bgm', {
         volume: 0.5,
         loop: true,
         paused: true,
     })
 
     let data = {
-        playerPos: k.center().add(0, 400),
+        playerPos: k.center(),
         direction: 'down',
         flags: [],
     }
     // k.go('intro', bgm)
-    k.go('downstairs', data, bgm)
+    k.go('finale', data, bgm)
     
 }

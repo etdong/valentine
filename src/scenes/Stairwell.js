@@ -1,5 +1,4 @@
 import drawCurLocation from "../components/CurrentLocation";
-import initDebug from "../components/debug";
 import makePlayer from "../entities/Player";
 import makeRoom from "../entities/Room";
 import { isMuted } from "../ReactUI";
@@ -24,7 +23,6 @@ export default function initStairwell(k) {
 
         drawCurLocation(k, 'stairs')
 
-        initDebug(k, player)
 
         k.add([
             k.sprite('stairwell'),
