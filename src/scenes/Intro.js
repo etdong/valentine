@@ -31,7 +31,7 @@ export default function initIntro(k) {
             let data = {
                 playerPos: k.center(),
                 direction: 'down',
-                flags: ['opened1', 'opened2', 'opened3', 'opened4'],
+                flags: [],
             }
             k.go('intro', data, bgm)
         })
